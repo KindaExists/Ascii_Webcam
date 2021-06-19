@@ -13,9 +13,9 @@ def main(stdscr):
     cv2.namedWindow("test")
     vc = cv2.VideoCapture(0)
 
-    w, h = 80, 60   # 160, 120
+    w, h = 120, 90  # 160, 120
     pad_multiplier = 5
-    pad = curses.newpad(h * pad_multiplier, w * pad_multiplier)
+    pad = curses.newpad(2000, 2000)
 
 
     gscale = " .:-=+*#%@"
