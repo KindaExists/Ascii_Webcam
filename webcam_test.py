@@ -1,30 +1,38 @@
 import cv2
+import curses
 
-cv2.namedWindow("test")
-vc = cv2.VideoCapture(0)
+def main(stdscr):
+    cv2.namedWindow("test")
+    vc = cv2.VideoCapture(0)
 
-gscale = " .:-=+*#%@"
-# 10 Levels of grayscale
+    gscale = " .:-=+*#%@"
+    # 10 Levels of grayscale
 
-if vc.isOpened():
-    rval, frame = vc.read()
-else:
-    rval = False
+    w, h = 80, 60   # 160, 120
 
-w, h = 160, 120
 
-while rval:
-    rval, frame = vc.read()
-    frame = cv2.resize(frame, (w, h))
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    if vc.isOpened():
+        rval, frame = vc.read()
+    else:
+        rval = False
 
-    cv2.imshow("test", gray)
+    while rval:
+        stdscr.clear()
 
-    thing = [[gscale[round(gray[y, x] * (9/256))] for x in range(w)] for y in range(h)]
-    print('\n'.join(['  '.join(y) for y in thing]))
+        rval, frame = vc.read()
+        frame = cv2.resize(frame, (w, h))
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    if cv2.waitKey(20) == 27: # ESC key
-        break
+        cv2.imshow("test", gray)
 
-vc.release()
-cv2.destroyWindow("test")
+        thing = [[gscale[round(gray[y, x] * (9/256))] for x in range(w)] for y in range(h)]
+        print('\n'.join(['  '.join(y) for y in thing]))
+
+        stdscr.refresh()
+        if cv2.waitKey(20) == 27: # ESC key
+            break
+    vc.release()
+    cv2.destroyWindow("test")
+curses.wrapper(main)
+
+
