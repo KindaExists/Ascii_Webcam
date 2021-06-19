@@ -1,3 +1,10 @@
+
+"""
+Notable Issues to fix later
+    1) Program cannot handle terminal resizing, this is most likely a problem due to this running in Windows
+
+"""
+
 import cv2
 import curses
 
