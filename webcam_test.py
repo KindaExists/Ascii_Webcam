@@ -20,10 +20,10 @@ def main(stdscr):
         stdscr.clear()
 
         rval, frame = vc.read()
+        cv2.imshow("test", frame)
+
         frame = cv2.resize(frame, (w, h))
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        cv2.imshow("test", gray)
 
         thing = [[gscale[round(gray[y, x] * (9/256))] for x in range(w)] for y in range(h)]
         print('\n'.join(['  '.join(y) for y in thing]))
